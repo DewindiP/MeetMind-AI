@@ -28,9 +28,13 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      localStorage.removeItem("meetmind_token");
-      localStorage.removeItem("meetmind_user");
-    }
+  localStorage.removeItem("meetmind_token");
+  localStorage.removeItem("meetmind_user");
+
+  window.dispatchEvent(
+    new Event("meetmind:unauthorized"),
+  );
+}
 
     return Promise.reject(error);
   },
